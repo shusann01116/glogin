@@ -21,7 +21,7 @@
 ## セットアップ
 
 ```sh
-git clone <リポジトリの URL> ~/.local/share/glogin
+git clone https://github.com/shusann01116/glogin.git ~/.local/share/glogin
 cd ~/.local/share/glogin
 npm ci
 ln -s ~/.local/share/glogin/glogin ~/.local/bin/glogin
