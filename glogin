@@ -1,0 +1,12 @@
+#!/bin/sh
+# gcloud auth login (+ ADC) をパスキーの OS ダイアログ承認だけで済ませる。gcloud が BROWSER として自分を呼び返す
+D="$HOME/.local/share/glogin"
+case "$1" in
+  --setup)
+    exec node "$D/glogin.mjs" "https://chromewebstore.google.com/detail/aeblfdkhhhdcdjpifhhbdiojplfjncoa" ;;
+  http*)
+    # gcloud はブラウザ起動の終了を待ってから redirect を受けるので、待たせずに返す
+    nohup node "$D/glogin.mjs" "$1" "$GLOGIN_ACCOUNT" >>"$D/glogin.log" 2>&1 &
+    exit 0 ;;
+esac
+GLOGIN_ACCOUNT="$(gcloud config get account 2>/dev/null)" BROWSER="$0" exec gcloud auth login --update-adc "$@"
